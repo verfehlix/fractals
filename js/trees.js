@@ -2,6 +2,9 @@
 const canvas = document.getElementById("fractalCanvas")
 const context = canvas.getContext('2d')
 
+// drawing parameters
+const shortenFactor = 0.7
+
 // draws a line
 function drawLine(startPoint, endPoint) {
     context.beginPath()
@@ -31,7 +34,7 @@ function drawTree(startPoint, endPoint, angleDeg) {
     drawLine(startPoint, endPoint)
 
     // calculate length of next lines
-    const newLength = lineLength * 2/3
+    const newLength = lineLength * shortenFactor
 
     // calculate angle between the two points
     const existingAngle = Math.atan2(endPoint.y - startPoint.y, endPoint.x - startPoint.x)
@@ -53,5 +56,22 @@ function drawTree(startPoint, endPoint, angleDeg) {
 
 }
 
-//start the recursion
-drawTree({x: 400, y: 700}, {x: 400, y: 550}, 30)
+// static
+drawTree({x: 400, y: 700}, {x: 400, y: 550}, 45)
+
+// // animated
+// let direction = 1
+// let angle = 1
+
+// setInterval(function() {
+//     context.clearRect(0, 0, canvas.width, canvas.height)
+
+//     if(angle === 0 || angle === 90) {
+//         direction = - direction
+//     }
+
+//     drawTree({x: 400, y: 700}, {x: 400, y: 550}, angle)
+
+//     angle += direction
+
+// }, 5)
