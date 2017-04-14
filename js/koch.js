@@ -2,16 +2,6 @@
 const canvas = document.getElementById("fractalCanvas")
 const context = canvas.getContext('2d')
 
-// drawing parameters
-const start = {
-    x: 5,
-    y: 250
-}
-const end = {
-    x: 845,
-    y: 250
-}
-
 // draws a line
 function drawLine(startPoint, endPoint) {
     context.beginPath()
@@ -84,4 +74,6 @@ function koch(startPoint, endPoint) {
     koch(right, endPoint)
 }
 
-koch(start, end)
+koch({x: 750, y: 250}, {x: 100, y: 250})
+koch({x: 100, y: 250}, {x: 400, y: 750})
+koch({x: 400, y: 750}, {x: 750, y: 250})
