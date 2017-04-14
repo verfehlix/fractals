@@ -26,7 +26,7 @@ function drawTree(startPoint, endPoint, angleDeg) {
     const diffY = startPoint.y - endPoint.y
     const lineLength = Math.sqrt(Math.pow(diffX, 2) + Math.pow(diffY, 2))
 
-    if(lineLength<1) {
+    if(lineLength<2) {
         return
     }
 
@@ -57,21 +57,21 @@ function drawTree(startPoint, endPoint, angleDeg) {
 }
 
 // static
-drawTree({x: 400, y: 700}, {x: 400, y: 550}, 45)
+// drawTree({x: 400, y: 700}, {x: 400, y: 550}, 45)
 
-// // animated
-// let direction = 1
-// let angle = 1
+// animated
+let direction = 0.2
+let angle = 20
 
-// setInterval(function() {
-//     context.clearRect(0, 0, canvas.width, canvas.height)
+setInterval(function() {
+    context.clearRect(0, 0, canvas.width, canvas.height)
 
-//     if(angle === 0 || angle === 90) {
-//         direction = - direction
-//     }
+    if(angle <= 0 || angle >= 90) {
+        direction = - direction
+    }
 
-//     drawTree({x: 400, y: 700}, {x: 400, y: 550}, angle)
+    drawTree({x: 400, y: 700}, {x: 400, y: 550}, angle)
 
-//     angle += direction
+    angle += direction
 
-// }, 5)
+}, 5)
