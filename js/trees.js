@@ -2,9 +2,6 @@
 const canvas = document.getElementById("fractalCanvas")
 const context = canvas.getContext('2d')
 
-// init vars
-const angleRad = 0.523599 // 30 deg
-
 // draws a line
 function drawLine(startPoint, endPoint) {
     context.beginPath()
@@ -13,8 +10,13 @@ function drawLine(startPoint, endPoint) {
     context.stroke()
 }
 
+// converts a degree angle to radians
+function degToRad(angleDeg) {
+    return angleDeg * (Math.PI / 180)
+}
+
 // draws a tree (recursively)
-function drawTree(startPoint, endPoint) {
+function drawTree(startPoint, endPoint, angleDeg) {
 
     // exit condition for recursion
     const diffX = startPoint.x - endPoint.x
@@ -36,19 +38,20 @@ function drawTree(startPoint, endPoint) {
 
     // calculate new end points
     const pointRight = {
-        x: endPoint.x + newLength * Math.cos((existingAngle - angleRad)),
-        y: endPoint.y + newLength * Math.sin((existingAngle - angleRad))
+        x: endPoint.x + newLength * Math.cos((existingAngle - degToRad(angleDeg))),
+        y: endPoint.y + newLength * Math.sin((existingAngle - degToRad(angleDeg)))
     }
 
     const pointLeft = {
-        x: endPoint.x + newLength * Math.cos((existingAngle + angleRad)),
-        y: endPoint.y + newLength * Math.sin((existingAngle + angleRad))
+        x: endPoint.x + newLength * Math.cos((existingAngle + degToRad(angleDeg))),
+        y: endPoint.y + newLength * Math.sin((existingAngle + degToRad(angleDeg)))
     }
 
-    drawTree(endPoint, pointRight)
-    drawTree(endPoint, pointLeft)
+    drawTree(endPoint, pointRight, angleDeg)
+    drawTree(endPoint, pointLeft, angleDeg)
 
 
 }
 
-drawTree({x: 400, y: 700}, {x: 400, y: 550})
+//start the recursion
+drawTree({x: 400, y: 700}, {x: 400, y: 550}, 30)
