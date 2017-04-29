@@ -9,19 +9,20 @@ const colorful = true
 // draws a rectangle
 function drawRect(x, y, size) {
     if(colorful) {
-        context.fillStyle = getRandomColorString()
+        context.fillStyle = getVeryColoredColorString(x, y)
     }
     context.fillRect(x, y, size, size)
 }
 
-// returns a random color in string format
-function getRandomColorString() {
-    const r = Math.floor(Math.random() * 255) + 1  
-    const g = Math.floor(Math.random() * 255) + 1  
-    const b = Math.floor(Math.random() * 255) + 1  
+// returns a "random" color in string format
+function getVeryColoredColorString(x, y) {
+    const r = Math.floor((x + y) / 1500 * 255) + 1
+    const g = 0
+    const b = Math.floor((1500 - (x + y))/ 1500 * 255) + 1
 
     return "rgb(" + r + "," + g + "," + b + ")"
 }
+
 
 // recursive sierpinski sierpinskiCarpet function
 function sierpinskiCarpet(x, y, size) {
