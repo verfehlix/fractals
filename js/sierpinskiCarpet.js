@@ -2,11 +2,25 @@
 const canvas = document.getElementById("fractalCanvas")
 const context = canvas.getContext('2d')
 
+// drawing parameters
 const canvasSize = canvas.width
+const colorful = true
 
 // draws a rectangle
 function drawRect(x, y, size) {
+    if(colorful) {
+        context.fillStyle = getRandomColorString()
+    }
     context.fillRect(x, y, size, size)
+}
+
+// returns a random color in string format
+function getRandomColorString() {
+    const r = Math.floor(Math.random() * 255) + 1  
+    const g = Math.floor(Math.random() * 255) + 1  
+    const b = Math.floor(Math.random() * 255) + 1  
+
+    return "rgb(" + r + "," + g + "," + b + ")"
 }
 
 // recursive sierpinski sierpinskiCarpet function
@@ -46,5 +60,10 @@ function sierpinskiCarpet(x, y, size) {
 const initialSize = canvasSize / 3
 
 const initialXY = canvasSize / 2 - initialSize/2
+
+if(colorful) {
+    context.fillStyle = "black"
+    context.fillRect(0, 0, canvasSize, canvasSize)
+}
 
 sierpinskiCarpet(initialXY, initialXY, initialSize)
