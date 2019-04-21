@@ -1,10 +1,10 @@
 # fractals
+
 fractals in html / js
 
 ## Cantor Fractal
 
 ![cantor](https://user-images.githubusercontent.com/7032914/30536324-a99923d6-9c65-11e7-9487-3c82ddb3a43e.png)
-
 
 ## Koch Triangle
 

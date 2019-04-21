@@ -1,5 +1,5 @@
 // setup canvas
-const canvas = document.getElementById("fractalCanvas")
+const canvas = document.getElementById('fractalCanvas')
 const context = canvas.getContext('2d')
 
 // draws a line
@@ -36,20 +36,20 @@ function koch(startPoint, endPoint) {
 
     // defined left split point on our line
     const left = {
-        x: 2 / 3 * startPoint.x + 1 / 3 * endPoint.x,
-        y: 2 / 3 * startPoint.y + 1 / 3 * endPoint.y
+        x: (2 / 3) * startPoint.x + (1 / 3) * endPoint.x,
+        y: (2 / 3) * startPoint.y + (1 / 3) * endPoint.y,
     }
 
     // defined right split point on our line
     const right = {
-        x: 1 / 3 * startPoint.x + 2 / 3 * endPoint.x,
-        y: 1 / 3 * startPoint.y + 2 / 3 * endPoint.y
+        x: (1 / 3) * startPoint.x + (2 / 3) * endPoint.x,
+        y: (1 / 3) * startPoint.y + (2 / 3) * endPoint.y,
     }
 
     // define middle point on our line
     const middle = {
         x: (left.x + right.x) / 2,
-        y: (left.y + right.y) / 2
+        y: (left.y + right.y) / 2,
     }
 
     // calculate perpendicular vector
@@ -58,8 +58,8 @@ function koch(startPoint, endPoint) {
 
     // define top point of triangle via middle point + perpendicular vector
     const top = {
-        x: middle.x + (Math.sqrt(3) / 2 * vectorXperpendicular),
-        y: middle.y + (Math.sqrt(3) / 2 * vectorYperpendicular)
+        x: middle.x + (Math.sqrt(3) / 2) * vectorXperpendicular,
+        y: middle.y + (Math.sqrt(3) / 2) * vectorYperpendicular,
     }
 
     // draw lines of triangle & erase bottom line
@@ -74,6 +74,6 @@ function koch(startPoint, endPoint) {
     koch(right, endPoint)
 }
 
-koch({x: 750, y: 250}, {x: 100, y: 250})
-koch({x: 100, y: 250}, {x: 400, y: 750})
-koch({x: 400, y: 750}, {x: 750, y: 250})
+koch({ x: 750, y: 250 }, { x: 100, y: 250 })
+koch({ x: 100, y: 250 }, { x: 400, y: 750 })
+koch({ x: 400, y: 750 }, { x: 750, y: 250 })
