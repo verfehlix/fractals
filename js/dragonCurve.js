@@ -59,9 +59,15 @@ function getOrthogonalVectorCounterClockWise(vector) {
     }
 }
 
-// TODO: rotation immer abwechselnd!
+const initialLine = [{ x: 200, y: 550 }, { x: 650, y: 550 }]
+const MAX_DEPTH = 15
 
-function calculateAngledChildLines(line, i) {
+function dragonCurve(line, switchDirection, depth) {
+    if (depth === MAX_DEPTH) {
+        return
+    }
+    eraseLine(line[0], line[1])
+
     const childLineLength = tri45getSideLengthFromBaseLine(line)
     const startPointLine1 = line[0]
     const endPointLine2 = line[1]
@@ -81,33 +87,25 @@ function calculateAngledChildLines(line, i) {
     const orth1 = getOrthogonalVectorClockWise(baseVector)
     const orth2 = getOrthogonalVectorCounterClockWise(baseVector)
 
+    const orth = switchDirection ? orth1 : orth2
+
     const childLineCrossPoint = {
-        x: middlePointBaseLine.x + orth1.x * height,
-        y: middlePointBaseLine.y + orth1.y * height,
+        x: middlePointBaseLine.x + orth.x * height,
+        y: middlePointBaseLine.y + orth.y * height,
     }
 
-    return [
-        [startPointLine1, childLineCrossPoint],
-        [childLineCrossPoint, endPointLine2],
-    ]
+    const child1 = [startPointLine1, childLineCrossPoint]
+    const child2 = [childLineCrossPoint, endPointLine2]
+
+    drawLine(child1[0], child1[1])
+    drawLine(child2[0], child2[1])
+
+    dragonCurve(child1, true, depth + 1)
+    dragonCurve(child2, false, depth + 1)
 }
 
-let i = 0
-const MAX_I = 2
+// some lines are erased by default --> todo: implement rec func so that
+// it gets an array and returns an array, so in the end we have one big
+// array of (correct) lines which will be drawn by a different function
 
-const initialLines = [[{ x: 200, y: 425 }, { x: 600, y: 425 }]]
-
-function dragonCurve(lineList) {
-    if (i === MAX_I) {
-        return
-    }
-
-    lineList.forEach(line => {
-        drawLine(line[0], line[1])
-        const childs = calculateAngledChildLines(line, i)
-        dragonCurve(childs)
-    })
-    i++
-}
-
-dragonCurve(initialLines)
+dragonCurve(initialLine, true, 0)
