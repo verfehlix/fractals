@@ -59,15 +59,13 @@ function getOrthogonalVectorCounterClockWise(vector) {
     }
 }
 
-const initialLine = [{ x: 200, y: 550 }, { x: 650, y: 550 }]
-const MAX_DEPTH = 15
+function drawAllLines(lines) {
+    lines.forEach(line => {
+        drawLine(line[0], line[1])
+    })
+}
 
 function dragonCurve(line, switchDirection, depth) {
-    if (depth === MAX_DEPTH) {
-        return
-    }
-    eraseLine(line[0], line[1])
-
     const childLineLength = tri45getSideLengthFromBaseLine(line)
     const startPointLine1 = line[0]
     const endPointLine2 = line[1]
@@ -93,19 +91,32 @@ function dragonCurve(line, switchDirection, depth) {
         x: middlePointBaseLine.x + orth.x * height,
         y: middlePointBaseLine.y + orth.y * height,
     }
-
     const child1 = [startPointLine1, childLineCrossPoint]
     const child2 = [childLineCrossPoint, endPointLine2]
 
-    drawLine(child1[0], child1[1])
-    drawLine(child2[0], child2[1])
-
-    dragonCurve(child1, true, depth + 1)
-    dragonCurve(child2, false, depth + 1)
+    if (depth === MAX_DEPTH) {
+        return [child1, child2]
+    } else {
+        return [
+            ...dragonCurve(child1, true, depth + 1),
+            ...dragonCurve(child2, false, depth + 1),
+        ]
+    }
 }
 
-// some lines are erased by default --> todo: implement rec func so that
-// it gets an array and returns an array, so in the end we have one big
-// array of (correct) lines which will be drawn by a different function
+const initialLine = [{ x: 200, y: 400 }, { x: 750, y: 400 }]
+let MAX_DEPTH = 1
+let direction = 1
 
-dragonCurve(initialLine, true, 0)
+const drawInterval = setInterval(function() {
+    context.clearRect(0, 0, canvas.width, canvas.height)
+
+    if (MAX_DEPTH === 15 || MAX_DEPTH === 0) {
+        direction = -direction
+    }
+
+    const dragonLines = dragonCurve(initialLine, true, 0)
+    drawAllLines(dragonLines)
+
+    MAX_DEPTH += direction
+}, 1000)
