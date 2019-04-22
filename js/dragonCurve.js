@@ -119,4 +119,4 @@ const drawInterval = setInterval(function() {
     drawAllLines(dragonLines)
 
     MAX_DEPTH += direction
-}, 1000)
+}, 200)
